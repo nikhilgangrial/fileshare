@@ -1,0 +1,338 @@
+#:kivy 1.0.9
+
+
+<HOME>:
+
+	canvas.before:
+		Color:
+			rgba: 0, 0.4706, 1 , 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	
+	Button:
+		background_color:  0, 0, 0, 0
+		on_press: root.clicked_rec()
+		size_hint: 0.35, 0.25
+		pos_hint: {'x': 0.325, 'y':0.65}
+
+	Label:
+		text: "Receive"
+		size_hint: 0.35, 0.1
+		pos_hint: {'x': 0.325, 'y':0.55}
+
+
+	Button:
+		background_color:  0, 0, 0 , 0
+		on_press: root.clicked_sen()
+		size_hint: 0.35,0.25
+		pos_hint: {'x':0.325, 'y':0.20}
+
+	Label:
+		text: "Send"
+		size_hint: 0.35, 0.1
+		pos_hint: {'x': 0.325, 'y':0.10}
+
+
+
+<FILECHOOSER>:
+	fc: fc
+	dirs:dirs
+
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		orientation: "vertical"
+
+		BoxLayout:
+			id: dirs
+			size_hint_y: None
+			height: root.height*0.05
+
+		FileChooserIconView:
+			id: fc
+			path: root.path_
+			multiselect: True
+			dirselect: True
+
+		BoxLayout:
+			size_hint_y: None
+			height: root.height*0.1
+			Button:
+				text: "Cancel"
+				on_release: root.cancel()
+
+			Button:
+				text: "Load"
+				on_release: root.load(fc.path, fc.selection)
+
+				
+		
+
+<RECEIVER>:
+	
+	lab: lab
+	wait:wait
+
+	canvas.before:
+		Color:
+			rgba: 0, 0.4706, 1 , 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	
+	Label:	
+		id: wait
+		text_size: self.size
+		halign: 'left'
+		font_size: root.height*0.03
+		valign: 'middle'
+		text: "Waiting for Sender ..."
+		size_hint: 0.7, 0.1
+		pos_hint: {'x': 0.01, 'y':0.9}
+	
+	Label:	
+		id: lab
+		font_size: root.height*0.05
+		halign: 'center'
+		valign: 'middle'
+		text: "Receiving on Port\n" + root.ip
+		size_hint: 0.6, 0.5
+		pos_hint: {'x': 0.2, 'y':0.3}
+	
+	Button: 
+		background_normal: 'bck_n.png'
+		on_press: root.pressed_cancel()
+		size_hint: 0.8,0.1
+		pos_hint: {'x':0.1, 'y':0.05}
+	
+	Label:	
+		color:  1, 1, 1 , 1
+		font_size: root.height*0.03
+		text: "Cancel"
+		size_hint: 0.8,0.1
+		pos_hint: {'x':0.1, 'y':0.05}
+
+
+<SENDER>
+	ip:ip
+
+	canvas.before:
+		Color:
+			rgba: 0, 0.4706, 1 , 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+
+	Label:	
+		id: wait
+		text_size: self.size
+		halign: 'left'
+		font_size: root.height*0.03
+		valign: 'middle'
+		text: "Waiting to connect ..."
+		size_hint: 0.7, 0.1
+		pos_hint: {'x': 0.01, 'y':0.9}
+	
+	Label:	
+		id: lab
+		font_size: root.height*0.05
+		halign: 'center'
+		valign: 'middle'
+		text: "Enter IP of Receiver"
+		size_hint: 0.6, 0.5
+		pos_hint: {'x': 0.2, 'y':0.5}
+	
+	TextInput: 
+		id: ip
+		halign:'center'
+		valign:'center'
+		hint_text: 'xxx.xxx.xxx.xxx'
+		font_size: root.height*0.04
+		multiline: False
+		focus:True
+		size_hint: 0.4,0.1
+		pos_hint: {'x':0.3, 'y':0.5}
+		write_tab: False	
+	
+	Button: 
+		background_normal: 'bck_n.png'
+		font_size: root.height*0.03
+		text: "Connect"
+		on_press: root.pressed_connect()
+		size_hint: 0.4,0.1
+		pos_hint: {'x':0.3, 'y':0.26}
+
+	Button: 
+		background_normal: 'bck_n.png'
+		font_size: root.height*0.03
+		text: "Cancel"
+		on_press: root.pressed_cancel()
+		size_hint: 0.8,0.1
+		pos_hint: {'x':0.1, 'y':0.05}
+
+
+<RECEIVING>:
+	table:table
+	rec: rec
+	rate: rate
+	recei: recei
+	pb: pb
+	time: time
+
+	canvas.before:
+		Color:
+			rgba: 0, 0.4706, 1 , 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	
+	Label:	
+		id: rec
+		text_size: self.size
+		halign: 'left'
+		font_size: root.height*0.04
+		valign: 'middle'
+		text: "Receving Data ..."
+		size_hint: 0.7, 0.1
+		pos_hint: {'x': 0.01, 'y':0.9}
+	
+	Label:
+		text: "Received:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.05, 'y': 0.75}
+		size_hint: 0.15, 0.14
+	
+	Label:	
+		id: recei
+		text: "0/0"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.24, 'y': 0.745}
+		size_hint: 0.15, 0.14
+
+	Label:
+		text: "Rate:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.57, 'y': 0.75}
+		size_hint: 0.15, 0.14
+
+	Label:	
+		id: rate
+		text: "0bps"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.75, 'y': 0.745}
+		size_hint: 0.15, 0.14
+
+	ProgressBar:
+		id: pb
+		value: 0
+		max: 100
+		size_hint: 0.9, 0.03
+		pos_hint: {'x': 0.05, 'y': 0.7}
+	
+	Label:
+		text: "Time Left:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.225, 'y': 0.6}
+		size_hint: 0.3, 0.14
+
+	Label:	
+		id: time
+		text: "Calculating"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.5, 'y': 0.6}
+		size_hint: 0.4, 0.14
+
+	ScrollView:
+		size_hint: 0.95, 0.5
+		pos_hint:{'x':0.025, 'y':0.1}
+		do_scroll_x: False
+		GridLayout:
+			id: table
+			pos_hint:{'x':0.025, 'y':0.1}
+	
+
+<SENDING>:
+	table:table
+	sen: sen
+	rate: rate
+	sent: sent
+	pb: pb
+	time: time
+
+	canvas.before:
+		Color:
+			rgba: 0, 0.4706, 1 , 1
+		Rectangle:
+			pos: self.pos
+			size: self.size
+	
+	Label:	
+		id: sen
+		text_size: self.size
+		halign: 'left'
+		font_size: root.height*0.04
+		valign: 'middle'
+		text: "Sending Data ..."
+		size_hint: 0.7, 0.1
+		pos_hint: {'x': 0.01, 'y':0.9}
+	
+	Label:
+		text: "Sent:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.05, 'y': 0.75}
+		size_hint: 0.15, 0.14
+	
+	Label:	
+		id: sent
+		text: "0/0"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.24, 'y': 0.745}
+		size_hint: 0.15, 0.14
+
+	Label:
+		text: "Rate:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.57, 'y': 0.75}
+		size_hint: 0.15, 0.14
+
+	Label:	
+		id: rate
+		text: "0bps"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.75, 'y': 0.745}
+		size_hint: 0.15, 0.14
+
+	ProgressBar:
+		id: pb
+		value: 0
+		max: 100
+		size_hint: 0.9, 0.03
+		pos_hint: {'x': 0.05, 'y': 0.7}
+	
+	Label:
+		text: "Time Left:"
+		font_size: root.height*0.04
+		pos_hint: {'x':0.225, 'y': 0.6}
+		size_hint: 0.3, 0.14
+
+	Label:	
+		id: time
+		text: "Calculating"
+		font_size: root.height*0.03
+		pos_hint: {'x':0.4, 'y': 0.595}
+		size_hint: 0.4, 0.14
+
+	ScrollView:
+		size_hint: 0.95, 0.5
+		pos_hint:{'x':0.025, 'y':0.1}
+		do_scroll_x: False
+		GridLayout:
+			id: table
+			
+
+	
+	
+	
+
+	
